@@ -1,0 +1,2 @@
+- [SD wifi pro project](https://github.com/FYSETC/SD-WIFI-PRO?tab=readme-ov-file) 
+- [SD wifi pro source files](https://github.com/OliwierJaworski/SdWiFiBrowser?tab=readme-ov-file)
