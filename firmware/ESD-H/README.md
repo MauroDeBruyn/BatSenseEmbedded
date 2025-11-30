@@ -81,5 +81,14 @@ Restarting in 0 seconds...
 Restarting now.
 ```
 
+### hardware present
+[ESP8266]()
+[GL823K :USB 2.0 SD/MSPRO Card Reader](https://w.electrodragon.com/w/images/c/cb/GL823K.pdf)
+[CH340 :USB to serial chip](https://www.mpja.com/download/35227cpdata.pdf)
+
 ### Examples
 - [official espressif examples](https://github.com/espressif/ESP8266_RTOS_SDK/tree/d412ac601befc4dd024d2d2adcfaa319c7463e36/examples)
+-[documentation and examples of the SD-WIFI from fysetc](https://github.com/FYSETC/ESPWebDAV)
+-[esp32 http file serving](https://github.com/espressif/esp-idf/tree/v5.5.1/examples/protocols/http_server/file_serving)
+-[esp32 sd-spi](https://github.com/espressif/esp-idf/tree/683ddf8a6eeaf9189679273ba37b3fc82f515df0/examples/storage/sd_card/sdspi)
+-[simple HTTP](https://github.com/espressif/esp-idf/tree/v5.5.1/examples/protocols/http_server/simple)
