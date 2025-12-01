@@ -1,8 +1,6 @@
 #include "wifiAP.h"
 
-void wifi_init( void )
-{
-    ESP_LOGI(TAG_WIFI, "initialization in progress");
+void wifi_init( void ){
     tcpip_adapter_init();
     ESP_ERROR_CHECK(esp_event_loop_create_default());
 
@@ -13,14 +11,14 @@ void wifi_init( void )
 
     wifi_config_t wifi_config = {
         .ap = {
-            .ssid = EXAMPLE_ESP_WIFI_SSID,
-            .ssid_len = strlen(EXAMPLE_ESP_WIFI_SSID),
-            .password = EXAMPLE_ESP_WIFI_PASS,
-            .max_connection = EXAMPLE_MAX_STA_CONN,
+            .ssid = AP_WIFI_SSID,
+            .ssid_len = strlen(AP_WIFI_SSID),
+            .password = AP_WIFI_PASS,
+            .max_connection = AP_MAX_CONN,
             .authmode = WIFI_AUTH_WPA_WPA2_PSK
         },
     };
-    if (strlen(EXAMPLE_ESP_WIFI_PASS) == 0) {
+    if (strlen(AP_WIFI_PASS) == 0) {
         wifi_config.ap.authmode = WIFI_AUTH_OPEN;
     }
 
@@ -28,8 +26,8 @@ void wifi_init( void )
     ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_AP, &wifi_config));
     ESP_ERROR_CHECK(esp_wifi_start());
 
-    ESP_LOGI(TAG_WIFI, "wifi_init finished. SSID:%s password:%s",
-             EXAMPLE_ESP_WIFI_SSID, EXAMPLE_ESP_WIFI_PASS);
+    ESP_LOGI(TAG_WIFI_AP, "wifi_init_softap finished. SSID:%s password:%s",
+             AP_WIFI_SSID, AP_WIFI_PASS);
 }
 
 static void wifi_event_handler(void* arg, esp_event_base_t event_base,
@@ -37,11 +35,11 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base,
 {
     if (event_id == WIFI_EVENT_AP_STACONNECTED) {
         wifi_event_ap_staconnected_t* event = (wifi_event_ap_staconnected_t*) event_data;
-        ESP_LOGI(TAG_WIFI, "station "MACSTR" join, AID=%d",
+        ESP_LOGI(TAG_WIFI_AP, "station "MACSTR" join, AID=%d",
                  MAC2STR(event->mac), event->aid);
     } else if (event_id == WIFI_EVENT_AP_STADISCONNECTED) {
         wifi_event_ap_stadisconnected_t* event = (wifi_event_ap_stadisconnected_t*) event_data;
-        ESP_LOGI(TAG_WIFI, "station "MACSTR" leave, AID=%d",
+        ESP_LOGI(TAG_WIFI_AP, "station "MACSTR" leave, AID=%d",
                  MAC2STR(event->mac), event->aid);
     }
 }

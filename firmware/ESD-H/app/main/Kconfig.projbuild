@@ -1,0 +1,50 @@
+menu "Application Configuration"
+
+	comment "for WiFi AP Setting"
+
+	config AP_WIFI_SSID
+		string "WiFi SSID of AP mode"
+		default "BATSensEmbedded0"
+		help
+			SSID (network name) for the example to connect to.
+
+	config AP_WIFI_PASSWORD
+		string "WiFi Password of AP mode"
+		default "sY!52@51:"
+		help
+			WiFi password (WPA or WPA2) for the example to use.
+
+	config AP_WIFI_CHANNEL
+		int "WiFi Channel of AP mode"
+		range 1 13
+		default 1
+		help
+			WiFi channel (network channel) for the example to use.
+
+	config AP_MAX_STA_CONN
+		int "Maximal STA connections of AP mode"
+		default 4
+		help
+			Max number of the STA connects to AP.
+
+	comment "for WiFi STA Setting"
+
+	config STA_WIFI_SSID
+		string "WiFi SSID of STA mode"
+		default "BATSensEmbedded0"
+		help
+			SSID (network name) for the example to connect to.
+
+	config STA_WIFI_PASSWORD
+		string "WiFi Password of STA mode"
+		default "sY!52@51:"
+		help
+			WiFi password (WPA or WPA2) for the example to use.
+
+	config STA_CONNECT_TIMEOUT
+		int "Connect timeout of STA mode"
+		default 5
+		help
+			Set the connection timeout to avoid station reconnecting to the AP unlimited when the AP is really inexistent.
+
+endmenu

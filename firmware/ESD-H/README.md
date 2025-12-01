@@ -92,3 +92,5 @@ Restarting now.
 -[esp32 http file serving](https://github.com/espressif/esp-idf/tree/v5.5.1/examples/protocols/http_server/file_serving)
 -[esp32 sd-spi](https://github.com/espressif/esp-idf/tree/683ddf8a6eeaf9189679273ba37b3fc82f515df0/examples/storage/sd_card/sdspi)
 -[simple HTTP](https://github.com/espressif/esp-idf/tree/v5.5.1/examples/protocols/http_server/simple)
+-[HTTP html server guide](https://esp32tutorials.com/esp32-esp-idf-spiffs-web-server/)
+-[HTTP html server source code](https://github.com/ESP32Tutorials/ESP32-ESP-IDF-SPIFFS-Web-Server/tree/main/data)
