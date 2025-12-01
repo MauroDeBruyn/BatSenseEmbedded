@@ -7,10 +7,12 @@
    CONDITIONS OF ANY KIND, either express or implied.
 */
 #include "wifiAP.h"
+#include "FileSys.h"
 
 void app_main()
 {
-    printf("=== System Booted up ===\n");
-    ESP_LOGI(TAG, "ESP_WIFI_MODE_AP");
+    fs_init();
+    file_test();
     wifi_init();
+    fs_deinit();
 }
