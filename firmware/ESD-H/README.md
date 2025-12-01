@@ -94,3 +94,32 @@ Restarting now.
 -[simple HTTP](https://github.com/espressif/esp-idf/tree/v5.5.1/examples/protocols/http_server/simple)
 -[HTTP html server guide](https://esp32tutorials.com/esp32-esp-idf-spiffs-web-server/)
 -[HTTP html server source code](https://github.com/ESP32Tutorials/ESP32-ESP-IDF-SPIFFS-Web-Server/tree/main/data)
+-[spiff local storage example](https://github.com/espressif/esp-idf/blob/ae221c7b7a4bcea57a64cccaec360de3a109baed/examples/storage/spiffsgen/Makefile)
+
+### how to write data to the spiffs partition. 
+create a folder put some files in it(must be 1 dimensional so no other folders)
+
+download or find the [spiffsgen.py](https://github.com/espressif/esp-idf/blob/v4.2/components/spiffs/spiffsgen.py) code.
+find the partition size of your partition for example
+```bash
+# Name,   Type, SubType, Offset,  Size, Flags
+# Note: if you change the phy_init or app partition offset, make sure to change the offset in Kconfig.projbuild
+nvs,      data, nvs,     0x9000,  0x6000,
+phy_init, data, phy,     0xf000,  0x1000,
+factory,  app,  factory, 0x10000, 512K,
+storage,  data, spiffs,  ,        448K, 
+```
+determine the size for this its approx  458752
+run the following command in the directory above:
+```bash
+example: python spiffsgen.py 458752 ./spiffs spiffs.bin
+short info: python spiffsgen.py <partition_size> <directory_with_files> <resulting_file_name>
+```
+this creates a partition file **spiffs.bin** which then can be uploaded to the system
+**!note** : this will overwrite the previous partition from x-458752
+
+using the esp32 idf environment which you should already have. run the following command.
+```bash
+example: esptool.py --chip esp8266 --port COM6 --baud 115200 write_flash 0x90000 spiffs.bin
+short info: esptool.py --chip <esp8266 or esp32...> --port <COM6 or /dev/tty...> --baud <matching the one from the menuconfig> write_flash <free address (512K->0x80000+0x10000->0x90000)> spiffs.bin
+```

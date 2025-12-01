@@ -7,12 +7,10 @@
    CONDITIONS OF ANY KIND, either express or implied.
 */
 #include "wifiAP.h"
-#include "FileSys.h"
 
 void app_main()
 {
-    fs_init();
-    file_test();
     wifi_init();
+    Server_init();
     fs_deinit();
 }

@@ -8,11 +8,14 @@
 #include "esp_log.h" //for logs
 #include "esp_spiffs.h" //spiffs initialization
 
-static const char *TAG_FS = "spiffs";
+#include <dirent.h>
+#include <sys/stat.h>
 
 void fs_init( void );
 void fs_deinit( void );
 
+void ls_spiffs(const char *path);
 void file_test( void );
+void upload_index_html(void);
 
 #endif
