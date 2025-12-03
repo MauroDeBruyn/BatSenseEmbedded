@@ -79,9 +79,23 @@ void wifi_init( void ){
 esp_err_t send_web_page(httpd_req_t *req)
 {
     int response;
+    append_err(errbuffer, "-- From inside send_web_page --");
+    sprintf(response_data, PAGE_HTML, "testing if this works");
+
     response = httpd_resp_send(req, response_data, HTTPD_MAX_URI_LEN);
     return response;
 }
+
+esp_err_t send_errors(httpd_req_t *req)
+{
+    int response;
+    append_err(errbuffer, "-- From inside send_errors --");
+    sprintf(response_data, PAGE_ERR_HTML, errbuffer);
+
+    response = httpd_resp_send(req, response_data, HTTPD_MAX_URI_LEN);
+    return response;
+}
+
 
 esp_err_t favicon_handler(httpd_req_t *req)
 {
@@ -96,6 +110,13 @@ httpd_uri_t uri_get = {
     .user_ctx = NULL
 };
 
+httpd_uri_t uri_get_err = {
+    .uri = "/err",
+    .method = HTTP_GET,
+    .handler = send_errors,
+    .user_ctx = NULL
+};
+
 httpd_uri_t uri_favicon = {
     .uri = "/favicon.ico",
     .method = HTTP_GET,
@@ -104,30 +125,18 @@ httpd_uri_t uri_favicon = {
 };
 
 void Server_init(){
+    append_err(errbuffer, "-- From inside Server_init --");
     fs_init();
-    file_test();
 
-    memset((void *)index_html, 0, sizeof(index_html));
-    struct stat st;
-    if (stat(INDEX_HTML_PATH, &st))
-    {
-        ESP_LOGE(TAG_HTTP, "index.html not found");
-        return;
-    }
-
-    FILE *fp = fopen(INDEX_HTML_PATH, "r");
-    if (fread(index_html, st.st_size, 1, fp) == 0)
-    {
-        ESP_LOGE(TAG_HTTP, "fread failed");
-    }
-    fclose(fp);
-
+    memset((void *)errbuffer, 0, sizeof(errbuffer));
+    
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     httpd_handle_t server = NULL;
 
     if (httpd_start(&server, &config) == ESP_OK)
     {
         httpd_register_uri_handler(server, &uri_get);
+        httpd_register_uri_handler(server, &uri_get_err);
         httpd_register_uri_handler(server, &uri_favicon);
     }
 }

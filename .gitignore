@@ -4,3 +4,4 @@ firmware/ESD-H/app/build
 firmware/ESD-H/app/sdkconfig.old
 firmware/ESD-H/app/sdkconfig.old
 firmware/ESD-H/app/spiffs.bin
+firmware/ESD-H/app/mkspiffs.exe

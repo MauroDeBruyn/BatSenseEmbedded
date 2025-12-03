@@ -18,6 +18,8 @@
 #include "lwip/err.h"
 #include "lwip/sys.h"
 #include "FileSYS.h"
+#include "Webdata.h"
+#include "debug.h"
 
 //Acces Point setup
 #define AP_WIFI_SSID        CONFIG_AP_WIFI_SSID
@@ -35,8 +37,8 @@ void wifi_init( void );
 
 //HTML Server setup
 #define INDEX_HTML_PATH "/spiffs/index.html"
-char index_html[4096];
-char response_data[4096];
+char errbuffer[20480]; //20kb
+char response_data[22480];
 
 void Server_init();
 

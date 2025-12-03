@@ -12,5 +12,7 @@ void app_main()
 {
     wifi_init();
     Server_init();
+    ls_spiffs("/spiffs");
+    file_test();
     fs_deinit();
 }

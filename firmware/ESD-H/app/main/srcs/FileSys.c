@@ -1,30 +1,5 @@
 #include "FileSYS.h"
 
-static const char index_html_data[] =
-"<!DOCTYPE html>\n"
-"<html lang=\"en\">\n"
-"<head>\n"
-"    <meta charset=\"UTF-8\">\n"
-"    <title>Hello</title>\n"
-"    <style>\n"
-"        body {\n"
-"            margin: 0;\n"
-"            height: 100vh;\n"
-"            background: #bff3f2;\n"
-"            display: flex;\n"
-"            justify-content: center;\n"
-"            align-items: center;\n"
-"            font-family: Arial, sans-serif;\n"
-"            font-size: 48px;\n"
-"            color: black;\n"
-"        }\n"
-"    </style>\n"
-"</head>\n"
-"<body>\n"
-"    Hello World\n"
-"</body>\n"
-"</html>\n";
-
 static const char *TAG_FS = "spiffs";
 esp_vfs_spiffs_conf_t conf;
 
@@ -50,26 +25,6 @@ void fs_init( void){
     } else {
         ESP_LOGI(TAG_FS, "Partition size: total: %d, used: %d", total, used);
     }
-}
-
-void upload_index_html(void)
-{
-    struct stat st;
-    if (stat("/spiffs/index.html", &st) == 0) {
-        ESP_LOGI("UPLOAD", "index.html already exists, skipping");
-        return;
-    }
-
-    FILE *f = fopen("/spiffs/index.html", "w");
-    if (!f) {
-        ESP_LOGE("UPLOAD", "fopen failed");
-        return;
-    }
-
-    fwrite(index_html_data, 1, strlen(index_html_data), f);
-    fclose(f);
-
-    ESP_LOGI("UPLOAD", "index.html uploaded");
 }
 
 void ls_spiffs(const char *path)
@@ -105,23 +60,23 @@ void ls_spiffs(const char *path)
     closedir(dir);
 }
 
-
 void fs_deinit( void ){
     esp_vfs_spiffs_unregister(conf.partition_label);
 }
 
-void file_test( void ){
-    ESP_LOGI(TAG_FS, "Opening file");
-    FILE *f;
-    f = fopen("/spiffs/test.txt","w");
-    fprintf(f,"Hello Medium People Do you like my Blogs?");
+void file_test(void)
+{
+    FILE *f = fopen("/spiffs/index.html", "r");
+    if (!f) {
+        ESP_LOGE("SPIFFS", "Failed to open file");
+        return;
+    }
+
+    char buf[1024];
+    size_t len = fread(buf, 1, sizeof(buf) - 1, f);
+    buf[len] = 0;
+
+    ESP_LOGI("SPIFFS", "CONTENT:\n%s", buf);
+
     fclose(f);
-    ESP_LOGI(TAG_FS,"File written");
-    ls_spiffs("/spiffs");
-    upload_index_html();
-    f= fopen("/spiffs/test.txt", "r");
-    char line[64];
-    fgets(line, sizeof(line), f);//reads line from stream
-    fclose(f);
-    ESP_LOGI(TAG_FS, "Read from file: '%s'", line);
 }

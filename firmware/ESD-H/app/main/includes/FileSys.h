@@ -16,6 +16,6 @@ void fs_deinit( void );
 
 void ls_spiffs(const char *path);
 void file_test( void );
-void upload_index_html(void);
 
+extern char errbuffer[20480]; //20kb
 #endif
