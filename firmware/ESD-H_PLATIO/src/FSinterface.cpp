@@ -33,9 +33,11 @@ bool FS_navigator::FileRead() {
     if (!fileObj) return false;
 
     len = fileObj.size();
-    if (len > sizeof(buffer)) len = sizeof(buffer);
+    if (len >= sizeof(buffer)) len = sizeof(buffer);
 
     fileObj.readBytes(buffer, len);
+    buffer[len] = '\0';
+
     Serial.println("--- FileRead --- content:");
     Serial.write((uint8_t*)buffer, len);
 

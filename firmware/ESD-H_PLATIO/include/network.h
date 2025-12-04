@@ -5,6 +5,8 @@
 #include <ESPAsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include "FSinterface.h"
+#include "logging.h"
+
 
 class HTTP_server {
     const char* ssid;
@@ -12,9 +14,9 @@ class HTTP_server {
     IPAddress IP;
     AsyncWebServer server;
     FS_navigator sys_fs;
+    logger * logs;
 
     void server_addroutes();
-    String process_root_request(const String& var);
 
 public:
     HTTP_server(const char* ssid_, const char* password_);
