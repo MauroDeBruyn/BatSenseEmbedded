@@ -32,7 +32,7 @@ bool FS_navigator::FileOpen(const char *filename, const char* accesstype){
 bool FS_navigator::FileRead() {
     if (!fileObj) return false;
 
-    fileObj.size();
+    len = fileObj.size();
     if (len > sizeof(buffer)) len = sizeof(buffer);
 
     fileObj.readBytes(buffer, len);
