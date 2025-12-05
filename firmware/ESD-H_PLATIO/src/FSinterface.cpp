@@ -20,10 +20,8 @@ bool FS_navigator::FileOpen(const char *filename, const char* accesstype){
                strlen(filenName) + 1);
 
         fileObj = LittleFS.open(path, accesstype);
-        Serial.printf("--- FileOpen --- path: %s\n", path);
     } else {
         fileObj = LittleFS.open(filenName, accesstype);
-        Serial.printf("--- FileOpen --- path: %s\n", filenName);
     }
 
     return fileObj;
@@ -37,9 +35,6 @@ bool FS_navigator::FileRead() {
 
     fileObj.readBytes(buffer, len);
     buffer[len] = '\0';
-
-    Serial.println("--- FileRead --- content:");
-    Serial.write((uint8_t*)buffer, len);
 
     return true;
 }

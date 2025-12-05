@@ -9,10 +9,7 @@ HTTP_server::HTTP_server(const char* ssid_, const char* password_)
     WiFi.softAP(ssid, password);
 
     IP = WiFi.softAPIP();
-    Serial.print("AP IP address: ");
     logs->addLog("WIFI SOFT IP PASS:", "192.168.4.1");
-    Serial.println(IP);
-    Serial.println(WiFi.localIP());
 
     server_addroutes();
     server.begin();
