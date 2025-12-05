@@ -10,14 +10,14 @@ LED ledGP2(2);
 
 HTTP_server* serverAP;
 
+extern SDinterface* instance;
 void setup() {
-  //Serial.begin(115200);
+  Serial.begin(115200);
   serverAP = new HTTP_server(SSID, PASSWORD);
-  SDinterface sd;
-  sd.read_file("data_test.txt");
 }
 
 void loop() {
   ledGP2.toggle();
   delay(1000);
+  serverAP->http_main_page = instance->sdFiles_HTML_Format();
 }

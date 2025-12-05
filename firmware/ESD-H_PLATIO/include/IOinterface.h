@@ -2,8 +2,10 @@
 
 #include "Arduino.h"
 #include <SPI.h>
-#include "SdFat.h"
+#include "SD.h"
+#include "FS.h"
 #include "logging.h"
+#include "string.h"
 
 #define LED_ON 0
 #define LED_OFF 1
@@ -30,8 +32,8 @@ class SDinterface{
     static volatile unsigned long _spiBlockoutTime;
     static bool _weTookBus;
     char buffer[1024]{""};
-    SdFat sdfat;
     logger* logs;                  
+
 public:
     SDinterface();
     ~SDinterface(){}
@@ -39,4 +41,5 @@ public:
     void relinquishBusControl();
     bool canWeTakeBus();
     bool read_file(const char* filename); 
+    String sdFiles_HTML_Format();
 };

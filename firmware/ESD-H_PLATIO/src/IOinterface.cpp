@@ -8,8 +8,8 @@ void IRAM_ATTR SDGiveControl() {
     if(instance){
         instance->logs->addLog("sd-card", "failed to take bus");
     }
-    if (!SDinterface::_weTookBus)
-        SDinterface::_spiBlockoutTime = millis() + SPI_BLOCKOUT_PERIOD;
+    //if (!SDinterface::_weTookBus)
+        //SDinterface::_spiBlockoutTime = millis() + SPI_BLOCKOUT_PERIOD;
 }
 
 SDinterface::SDinterface()
@@ -19,6 +19,12 @@ SDinterface::SDinterface()
     // Detect when other master uses SPI bus
     pinMode(CS_SENSE, INPUT);
     attachInterrupt(CS_SENSE, SDGiveControl, FALLING);
+
+    if (!SD.begin(SD_CS)) {
+        logs->addLog("SD", "SD init failed");
+    } else {
+        logs->addLog("SD", "SD ready");
+    }
 }
 
 void SDinterface::takeBusControl()
@@ -47,33 +53,37 @@ bool SDinterface::canWeTakeBus()
     }
     return true;
 }
-
-bool SDinterface::read_file(const char *filename)
-{
-    if (!canWeTakeBus())
-    {
-        logs->addLog("sd-card", "failed to take bus");
-        return 1;
-    }
-    takeBusControl();
-
-    if (!sdfat.begin(SD_CS, SPI_FULL_SPEED))
-    {
-        logs->addLog("sd-card", "initialization of SD failed");
-        relinquishBusControl();
-        return 1;
+String SDinterface::sdFiles_HTML_Format(){
+    File root = SD.open("/");
+    if (!root || !root.isDirectory()) {
+        return "";
     }
 
-    File32 file = sdfat.open(filename, FILE_READ);
-    if (!file)
-    {
-        logs->addLog("sd-card", "failed to open file");
-        relinquishBusControl();
-        return 1;
+    String html =
+        "<!doctype html><html><head>"
+        "<meta charset='utf-8'>"
+        "<title>SD Browser</title>"
+        "<style>"
+        "body{font-family:monospace;background:#111;color:#0f0;padding:20px}"
+        "a{color:#0ff;text-decoration:none}"
+        "</style></head><body><h2>SD Files</h2><ul>";
+
+    for (;;) {
+        File file = root.openNextFile();
+        if (!file) break;
+
+        String name = file.name();
+        html += "<li><a href='/sd?f=" + name + "'>" + name + "</a> (";
+        html += file.size();
+        html += " bytes)</li>";
+
+        file.close();   // REQUIRED
+        yield();        // keep TCP alive
     }
 
-    logs->addLog("SD-card string read from file:", file.readString().c_str());
+    root.close();
 
-    relinquishBusControl();
-    return 0;
+    html += "</ul></body></html>";
+    return html;
 }
+
