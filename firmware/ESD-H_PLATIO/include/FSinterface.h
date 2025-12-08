@@ -9,7 +9,7 @@ class FS_navigator{
     char directory[20]{""};
     char filenName[20]{""};
     File fileObj;
-    char buffer[10240]; //1kb file-buffer
+    char buffer[10240]; //10kb file-buffer
     size_t len{0};    
     logger* logs;                  
 

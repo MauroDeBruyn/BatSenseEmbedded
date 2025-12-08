@@ -2,33 +2,39 @@
 
 volatile unsigned long SDinterface::_spiBlockoutTime = 0;
 bool SDinterface::_weTookBus = false;
-SDinterface* instance= nullptr;
+SDinterface* instance = nullptr;
 
 void IRAM_ATTR SDGiveControl() {
     if(instance){
-        instance->logs->addLog("sd-card", "failed to take bus");
+        if (!instance->_weTookBus){
+            instance->_spiBlockoutTime = millis() + SPI_BLOCKOUT_PERIOD;
+            instance->logs->addLog("sd-card", "failed to take bus");
+            Serial.println("failed to take the bus");
+            instance->logs->addLog("SD-card", "failed to take the bus");
+        }else{
+            Serial.println("We have the bus");
+            instance->logs->addLog("SD-card", "We have the bus");
+        }
     }
-    //if (!SDinterface::_weTookBus)
-        //SDinterface::_spiBlockoutTime = millis() + SPI_BLOCKOUT_PERIOD;
+}
+void IRAM_ATTR SDIdleControl() {
+    if(instance){
+        Serial.println("control of bus has been freed");
+        instance->logs->addLog("SD-card", "control freed");
+    }
 }
 
 SDinterface::SDinterface()
 {
     instance = this;
     logs = logger::create();
-    // Detect when other master uses SPI bus
-    pinMode(CS_SENSE, INPUT);
+    pinMode(CS_SENSE, INPUT); // detect when other master is using spi
     attachInterrupt(CS_SENSE, SDGiveControl, FALLING);
-
-    if (!SD.begin(SD_CS)) {
-        logs->addLog("SD", "SD init failed");
-    } else {
-        logs->addLog("SD", "SD ready");
-    }
+    attachInterrupt(CS_SENSE, SDIdleControl, RISING);
 }
 
 void SDinterface::takeBusControl()
-{
+{   
     _weTookBus = true;
     pinMode(MISO_PIN, SPECIAL);
     pinMode(MOSI_PIN, SPECIAL);
@@ -53,9 +59,13 @@ bool SDinterface::canWeTakeBus()
     }
     return true;
 }
-String SDinterface::sdFiles_HTML_Format(){
-    File root = SD.open("/");
-    if (!root || !root.isDirectory()) {
+
+String SDinterface::sdFiles_HTML_Format()
+{
+    
+    /*File root = SD.open("/");
+    if (!root || !root.isDirectory())
+    {
         return "";
     }
 
@@ -68,22 +78,24 @@ String SDinterface::sdFiles_HTML_Format(){
         "a{color:#0ff;text-decoration:none}"
         "</style></head><body><h2>SD Files</h2><ul>";
 
-    for (;;) {
-        File file = root.openNextFile();
-        if (!file) break;
+    for (;;)
+    {
+       File file = root.openNextFile();
+        if (!file)
+            break;
 
         String name = file.name();
         html += "<li><a href='/sd?f=" + name + "'>" + name + "</a> (";
         html += file.size();
         html += " bytes)</li>";
 
-        file.close();   // REQUIRED
-        yield();        // keep TCP alive
+        file.close(); // REQUIRED
+        yield();      // keep TCP alive
     }
 
     root.close();
 
     html += "</ul></body></html>";
-    return html;
+    return html;*/
+    return "work in progress";
 }
-

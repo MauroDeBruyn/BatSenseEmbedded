@@ -29,6 +29,7 @@ public:
 
 class SDinterface{
     friend void SDGiveControl();
+    friend void SDIdleControl();
     static volatile unsigned long _spiBlockoutTime;
     static bool _weTookBus;
     char buffer[1024]{""};

@@ -8,8 +8,9 @@ class logger{
     char logs[10240];
     size_t size{0};
     const char* log_template= "[ %s ] : %s\n";
+
 public: 
-    static logger* create();
+    static logger* create(); //singleton class initialization only via create
     inline char* getLogs(){return logs;}
     void addLog(const char* meta, const char* message);
 };
