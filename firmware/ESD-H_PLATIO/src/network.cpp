@@ -53,24 +53,30 @@ void HTTP_server::server_addroutes() {
             return;
         }
 
-        if (!instance->canWeTakeBus()) {
+        if (instance->canWeTakeBus() == false) {
             request->send(503, "text/plain", "SPI bus busy");
             return;
         }
 
-        instance->takeBusControl();
-
         String filename = "/" + request->getParam("f")->value();
+        instance->takeBusControl();
+        if (!SD.begin(SD_CS)){
+            Serial.println("SD.begin claim failed");
+            request->send(404, "text/plain", "failed to claim the bus");
+            return;
+        } else {
+            instance->_weTookBus = true;
+        } 
 
         if (!SD.exists(filename)) {
-            instance->relinquishBusControl();
+            instance->_weTookBus = false;
             request->send(404, "text/plain", "File not found");
             return;
         }
 
         File file = SD.open(filename, "r");
         if (!file) {
-            instance->relinquishBusControl();
+            instance->_weTookBus = false;
             request->send(500, "text/plain", "Open failed");
             return;
         }
@@ -78,10 +84,10 @@ void HTTP_server::server_addroutes() {
         const char* type = "application/octet-stream";
 
         request->onDisconnect([]() {
+            SD.end();
             instance->relinquishBusControl();
         });
         // Give ownership of 'file' to AsyncWebServer.
         request->send(file, filename, type, true);
-
         });
 }

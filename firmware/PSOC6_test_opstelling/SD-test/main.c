@@ -171,7 +171,7 @@ int main(void)
 		/* Close the file */
 		f_close(&fil);
 
-		cyhal_system_delay_ms(10000);
+		cyhal_system_delay_ms(40000);
     }
 }
 

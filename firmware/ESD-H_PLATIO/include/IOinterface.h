@@ -15,7 +15,7 @@
 #define MOSI_PIN		13
 #define SCLK_PIN		14
 #define CS_SENSE	    5
-#define SPI_BLOCKOUT_PERIOD	20000UL
+#define SPI_BLOCKOUT_PERIOD	2000UL
 
 
 class LED{
@@ -28,10 +28,7 @@ public:
 };
 
 class SDinterface{
-    friend void SDGiveControl();
-    friend void SDIdleControl();
-    static volatile unsigned long _spiBlockoutTime;
-    static bool _weTookBus;
+    friend void OnCS_Change();
     char buffer[1024]{""};
     logger* logs;                  
 
@@ -43,4 +40,7 @@ public:
     bool canWeTakeBus();
     bool read_file(const char* filename); 
     String sdFiles_HTML_Format();
+    static volatile bool _weTookBus;
+    static volatile unsigned long _spiBlockoutTime;
+    bool CS;
 };

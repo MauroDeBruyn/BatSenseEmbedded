@@ -1,27 +1,15 @@
 #include "IOinterface.h"
 
 volatile unsigned long SDinterface::_spiBlockoutTime = 0;
-bool SDinterface::_weTookBus = false;
+volatile bool SDinterface::_weTookBus = false;
 SDinterface* instance = nullptr;
 
-void IRAM_ATTR SDGiveControl() {
-    if(instance){
-        if (!instance->_weTookBus){
-            instance->_spiBlockoutTime = millis() + SPI_BLOCKOUT_PERIOD;
-            instance->logs->addLog("sd-card", "failed to take bus");
-            Serial.println("failed to take the bus");
-            instance->logs->addLog("SD-card", "failed to take the bus");
-        }else{
-            Serial.println("We have the bus");
-            instance->logs->addLog("SD-card", "We have the bus");
-        }
-    }
-}
-void IRAM_ATTR SDIdleControl() {
-    if(instance){
-        Serial.println("control of bus has been freed");
-        instance->logs->addLog("SD-card", "control freed");
-    }
+void IRAM_ATTR OnCS_Change() {
+    if (!instance) 
+        return;
+
+    if (!instance->_weTookBus) 
+        instance->CS = true; 
 }
 
 SDinterface::SDinterface()
@@ -29,8 +17,8 @@ SDinterface::SDinterface()
     instance = this;
     logs = logger::create();
     pinMode(CS_SENSE, INPUT); // detect when other master is using spi
-    attachInterrupt(CS_SENSE, SDGiveControl, FALLING);
-    attachInterrupt(CS_SENSE, SDIdleControl, RISING);
+
+    attachInterrupt(CS_SENSE, OnCS_Change, FALLING);
 }
 
 void SDinterface::takeBusControl()
@@ -62,10 +50,16 @@ bool SDinterface::canWeTakeBus()
 
 String SDinterface::sdFiles_HTML_Format()
 {
-    
-    /*File root = SD.open("/");
+    instance->takeBusControl();
+    if (!SD.begin(SD_CS)) {
+        Serial.println("failed to open root for HTML format func");
+        return "";
+    }
+
+    File root = SD.open("/");
     if (!root || !root.isDirectory())
     {
+        Serial.println("could not open root folder");
         return "";
     }
 
@@ -80,7 +74,7 @@ String SDinterface::sdFiles_HTML_Format()
 
     for (;;)
     {
-       File file = root.openNextFile();
+        File file = root.openNextFile();
         if (!file)
             break;
 
@@ -89,13 +83,14 @@ String SDinterface::sdFiles_HTML_Format()
         html += file.size();
         html += " bytes)</li>";
 
-        file.close(); // REQUIRED
-        yield();      // keep TCP alive
+        file.close(); 
+        yield();      
     }
 
     root.close();
-
+    SD.end();
+    instance->relinquishBusControl();
     html += "</ul></body></html>";
-    return html;*/
+    return html;
     return "work in progress";
 }
