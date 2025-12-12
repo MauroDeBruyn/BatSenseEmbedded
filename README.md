@@ -31,16 +31,11 @@
 ---
 
 ## 🧭 About <a name="about"></a>
-BatSenseEmbedded is a project designed for the PXL research group to investigate bat behavior within the cavity walls of homes. Researchers believe that differences in climatic conditions, such as temperature and humidity, affect how bats use these spaces. This system helps monitor environmental parameters, supports ecological studies, and guides renovation practices to protect bat habitats.
+BatSenseEmbedded is a technical research project developed for the PXL research group to study bat presence and movement within cavity walls of residential buildings. The project focuses on collecting environmental data from enclosed wall spaces that are believed to be used by bats during specific periods of the year.
 
----
+The system integrates multiple sensor types, including temperature, humidity, sound, and thermal sensors. All sensor data is collected and processed centrally using Home Assistant, which serves as the single integration and visualization platform. This project focuses on implementing and configuring this central system to reliably ingest, store, process, and present data from all deployed sensor modules.
 
-## 🚀 Technical Approach <a name="technical-approach"></a>
-- 🌡️ **Environment sensing:** Embedded modules measure temperature and humidity, based on the ESP32 platform.
-- 📡 **Wireless connectivity:** Sensor modules transmit data wirelessly to a central hub.
-- 🔋 **Battery operation:** Modules are engineered for long battery life, ensuring extended observation periods.
-- 🖥️ **Centralized data management:** The central module runs Home Assistant, collecting and organizing data from multiple modules.
-- 🛠️ **Non-destructive installation:** Mounting is designed for rapid, non-invasive deployment inside homes.
+The collected data is intended to support further analysis by researchers and to provide a factual basis for understanding bat usage of cavity walls in the context of building renovation and conservation.
 
 ---
 
@@ -50,10 +45,78 @@ BatSenseEmbedded is a project designed for the PXL research group to investigate
 - **Long operational life:** Battery-powered units are built for resilience.
 - **Field robustness:** Hardware is selected to resist condensation and variations in outdoor climate.
 - **Scalable deployment:** Supports installation in multiple homes for broad-scale studies.
+- **Real-time monitoring:** A real-time overview dashboard shows the current status of all devices, with clear indication of online and offline nodes.
+- **Continuous data logging:** Automatic and continuous logging of temperature and humidity data per module.
+- **Data visualization:** Graphical visualization with at least 30 minutes of history per module and one combined temperature/humidity graph for all modules.
+- **System capacity:** Management and visualization of at least 20 autonomous sensor modules.
+- **Persistent storage:** All measurement data is stored persistently and retained after Home Assistant restarts.
+- **Restart resilience:** Correct reinitialization after restart, ensuring all nodes and historical data are visible again.
+- **Thermal imaging:** Visualization of MLX90640 thermal data as a 32×24 heatmap, with logging of minimum, maximum, and average temperature.
+- **Data export:** Export of node lists and measurement data to CSV/Excel formats.
+- **Documentation support:** Support for capturing dashboard screenshots.
+- **Backup and recovery:** Ability to create and store configuration backups.
 
 ---
 
+## 🚀 Technical Approach <a name="technical-approach"></a>
+
+### Materials
+
+- **Raspberry Pi 4 (3 units)** used as central host systems  
+  - Power supply: 5.1 V DC / 3 A  
+  - Ethernet connection: Cat5/6
+
+- **Raspberry Pi 5 (1 unit)** used as central host system  
+  - Power supply: 5.1 V DC / 3 A  
+  - Ethernet connection: Cat5/6
+
+- **microSD cards (4 units, Class 1)**  
+  - Used for operating system installation and persistent data storage
+
+- **TP-Link TL-MR6400 Wireless N 4G-LTE routers (4 units)**  
+  - power supply: 9 V DC / 0.85 A  
+  - Ethernet connection: Cat5/6
+
+- **Preconfigured autonomous battery-powered sensor modules (40 units)**  
+  - Providing temperature, humidity, and thermal data
+
+### Methods
+
+- **Sensor modules** operate as independent data sources and transmit measurements wirelessly to a central system.
+    - **[temperature & humidity sensor documentation by group Bat-Detectie](https://github.com/BjarniHeselmans/Bat-Detectie.git)**
+    - **[thermal sensor documentation by group (Niels & Yinnis)]()**
+
+- **Home Assistant OS** is used as the central platform for data ingestion, processing, storage, and visualization.
+    - **[Documentation]()** details the complete Home Assistant implementation, including platform installation, sensor integration, dashboard configuration, and all additions and configurations carried out as part of the project.
+
+---
+
+
 ## 🗺️ Roadmap <a name="roadmap"></a>
+
+``` 
+== Resultaten ==
+Hier laat je bewijs zien van wat jullie systeem echt doet.
+Geen verhalen, geen beloftes, alleen aantoonbare realiteit.
+Hier hoort o.a. in:
+• Aantal werkende modules
+• Screenshots van Home Assistant
+• Temperatuurgrafieken
+• Humiditygrafieken
+• Camerabeelden met timestamp
+• Testresultaten
+• Stabiliteitstests
+Beantwoord hier:
+• Wat is effectief getest?
+• Wat werkte stabiel?
+• Wat werkte soms?
+• Wat werkte niet?
+Alles onderbouwen met beeld, grafiek of meetdata
+• Geen toekomstplannen
+• Geen meningen
+
+```
+
 - ✅ **Completed**
    - ESP modules tested for reliability and data accuracy
    - Cable lengths reduced to comply with I²C protocol specs
@@ -70,6 +133,24 @@ BatSenseEmbedded is a project designed for the PXL research group to investigate
    - Automated reporting and visualization tools for ecological research
 
 ---
+
+``` 
+== BESLUIT ==
+Hier kijken jullie kritisch terug op het project.
+Beantwoord hier eerlijk:
+• Wat is écht geslaagd?
+• Wat liep fout?
+• Wat was het moeilijkste technische probleem?
+• Wat zouden jullie anders doen met meer tijd?
+• Wat is de relevantie voor de praktijk?
+• Wat is de meerwaarde van dit project?
+Kritische reflectie
+Technisch eerlijk
+Professionele toon
+Geen excuses
+Geen “we hebben veel geleerd” zonder uitleg
+
+```
 
 ## 🛠️ Installation <a name="installation"></a>
 See [docs/INSTALL.md](./docs/INSTALL.md) for detailed instructions to set up and deploy sensor modules.
