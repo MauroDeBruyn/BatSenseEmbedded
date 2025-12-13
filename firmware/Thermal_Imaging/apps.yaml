@@ -1,0 +1,11 @@
+---
+hello_world:
+  module: hello
+  class: HelloWorld
+
+MLX90640_CAM1:
+  module: thermal_receiver
+  class: ThermalReceiver
+  ip: "0.0.0.0"
+  port: 6000
+  endpoint: "MLX90640_CAM1"
