@@ -50,20 +50,20 @@ After which you can either configure your existing addons or add new ones via th
 ## How to add local addons
 Local addons are a more advanced way of getting functionality onto your home assistant. 
 To add local addons you will need the following addon for this process to be simple.:
--Studio code server(this addon allows us to view the files on the system running home assistant. it has all the functionality that normal visual studio code has.)
+- Studio code server(this addon allows us to view the files on the system running home assistant. it has all the functionality that normal visual studio code has.)
 
-1. open studio code server navigate to '/addons' this will house the locally installed addons.
+1. open studio code server navigate to `/addons` this will house the locally installed addons.
 2. find the addon you want to install for example [appdaemon](https://github.com/hassio-addons/addon-appdaemon.git)
 3. open a terminal from inside studio code server
 ![where is terminal](/resources/documentation_media/Home_Assistant_Setup/where_is_terminal.png)
-4. either curl or git clone the 
+4. either curl or git clone the file repository
 ``` bash
 curl -LO https://github.com/hassio-addons/addon-appdaemon/archive/refs/tags/v0.17.13.tar.gz
 tar -xzf addon-appdaemon-0.17.13.tar.gz
 ```
-**NOTE**: -L follows redirects, -O keeps the original filename.
+**NOTE**: `-L` follows redirects, `-O` keeps the original filename.
 
-once the addon is installed under '/addons/' the final thing to do is to add it from inside home assistant.
+once the addon is installed under `/addons/` the final thing to do is to add it from inside home assistant.
 
 the process to add a local addon is the same as the one described in section [how to add addons](#how-to-add-addons) the only difference is that it appears under a section called 'Local add-ons' instead of 'Official add-ons'
 
@@ -85,10 +85,102 @@ solving the issue will depend on the error at hand for this one switching to the
 
 **NOTE**: Rebuilding the addon is necessary for the changes to take effect.
 
+## how to setup influxDB
+### Installation & setup
+Adding a database to your home assistant and saving data from your sensors is pretty straight forward.
+
+1. first we navigate over to the plugins section and install the `InfluxDB` addon
+2. Secondly open `InfluxDB` configuration window from within Home assistant and disable ssl.\
+**NOTE**: SSL ensures that sensitive data is securely transmitted through the browser. But becuase home assistant runs inside a local network data does not travel the public internet. SSL adds little value there unless you expose home assistant externally.
+
+2. Once installed the next step is to create a database this is done as follows:
+    1. from within the InfluxDB user interface open `InfluxDB Admin` which can be found in the ribbon on the left side.
+    2. in the top right corner select `Create Database`
+    3. give your database a name and confirm the creation using the green check-icon
+3. Select the Users-tab from the top. and create a new user which will have access to the database.
+4. select the user access permissions(1) and save it (2)
+![changing user access permissions](/resources/documentation_media/Home_Assistant_Setup/InfluxDB_UserAccess.png)
+
+### How to instruct Home assistant to save sensor data to influxDB
+1. Open the file editor from the Home assistant left ribbon.
+2. Open the folder icon
+3. Open the file called configuration.yaml\
+**NOTE**: Changes made to this folder have effect on restart and can break your system if configured incorrectly. 
+4. Add the following code snippet to the end of the file.
+```
+influxdb:  
+  host: localhost  
+  port: 8086  
+  database: $(database_name)  
+  username: $(User_with_database_permissions)  
+  password: $(User_with_database_permissions_password)  
+  ssl: false  
+  verify_ssl: false  
+  max_retries: 3  
+  default_measurement: state  
+  include:  
+    domains:  
+      - sensor
+```
+**NOTE**: sensor means only entities of type sensor.* will be written to InfluxDB (e.g. temperature, humidity, power, etc.), and other domains like switch, light, or binary_sensor are excluded.
+
+5. Replace each value shown in $() with your own configuration details before saving the file.
+6. After confirming the configuration is correct, save the file and restart Home Assistant.
+
+**NOTE**: If any non-critical error occurs during startup, it will be shown at the top of the Settings tab.
+
+### validating with sensor data input.
+To validate everything is working correctly we can open the database and check for data inputs from sensors.
+1. open InfluxDB user-interface from the side panel.
+2. Open the Explore panel.
+3. Select the sensor to view from the menu.
+4. select what to view.
+![InfluxDB Data Validation](/resources/documentation_media/Home_Assistant_Setup/InfluxDB_validation.png)
+
 ## How to add graphs to your home assistant dashboard
-```
-todo:
-```
+To display graphs to the user, Grafana was used due to its extensive visualization capabilities.
+
+### Adding InfluxDB plugin
+
+1. first we navigate over to the plugins section and install the `Grafana` addon
+2. Secondly open `Grafana` configuration window from within Home assistant and disable ssl
+3. from within the configuration panel add port `4444` to the exposed ports under the **network** section
+4. Start grafana from the information panel. \
+**NOTE**: It is recommended to review and enable the settings on this page if they suit your needs.
+5. Open the grafana user-interface from within home assistant.
+6. Navigate to the connection tab from the side-bar.
+7. Search for InfluxDB and `add new data source` from the top right corner.
+8. the following describes the setup of influxDB grafana plugin:
+    1. The URL should point to the InfluxDB container ID which can be found by going to: Settings -> Add-ons -> InfluxDB, there you will find a section `Hostname` with a value resembling something like `a0....-influxdb` insert that value in the URL field.
+    2. configure the username, password and database to reflect values from within InfluxDB and save the configuration \
+    **note**: If everything is configured correctly you should see the following message in a green window:
+    ![confirmation window](/resources/documentation_media/Home_Assistant_Setup/Grafana_InfluxDB_plugin_SetupConfirmation.png)
+
+### Creating a dashboard & graphs
+
+1. Open the Dashboard panel and click on `create a new dashboard`
+2. click on `add a new visualization` and select the data you want to display.
+3. from within the visualization creator configure the graph. \
+**NOTE**: example:
+![example graph](/resources/documentation_media/Home_Assistant_Setup/graph_example_grafana.png)
+4. Once the visualization is configured save it by clicking `Save dashboard` for a new project, and `save visualization` for an existing dashboard.
+5. The visualization is now visible in the grafana dashboard.
+
+### Adding visualization to Home assistant dashboard
+Following steps showcase a way of adding grafana visualization to the home assistant dashboard.
+1. open the dashboard which contains the visualization.
+2. click on 3 dots -> Share -> Share embed
+![URL opentab](/resources/documentation_media/Home_Assistant_Setup/grafana_where_URL.png)
+3. turn of Lock time range
+4. copy the url from the start to the end of the following character: `"` 
+![URL opentab](/resources/documentation_media/Home_Assistant_Setup/grafana_url_cpy.png)
+5. Navigate to the Home assistant dashboard.
+6. open: `Edit dashboard` -> Add card
+7. in the searchbar enter `webpage`
+8. under `URL` enter the copied link. and change the domain name to the one set on your home assistant. \
+**FOR EXAMPLE**: ```http://batsenseembedded:8123/rest/of/the/link``` \
+**NOTE**: Dont use batsenseembedded.local:8123, it relies on mDNS, which is not consistently supported or reliable across all networks and devices.
+9. The graph will be visible once the webpage configuration is done.
 ## How to add camera images to your home assistant dashboard
 ```
 todo:
@@ -97,5 +189,7 @@ todo:
 ```
 todo:
 ```
+## how to enabled and disable panels on the left side of home assistant screen.
 
 ## References
+[Data visualization using Grafana and InfluxDB](https://www.youtube.com/watch?v=e4qe_ghroe4)
