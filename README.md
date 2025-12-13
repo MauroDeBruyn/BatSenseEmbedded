@@ -83,10 +83,10 @@ The collected data is intended to support further analysis by researchers and to
 ### Methods
 
 - **Hardware setup** explains how the physical components are interconnected and configured to operate as a single system.
-    - **[Documentation](./docs/hardware_setup/README.md)** ( describes the complete hardware setup, including Raspberry Pi preparation, network configuration. )
+    - **[Documentation](./docs/hardware_setup/README.md)** ( describes the complete hardware setup, including Raspberry Pi preparation, Home Assistant installation, network configuration. )
 
 - **Home Assistant OS** is used as the central platform for data ingestion, processing, storage, and visualization.
-    - **[Documentation](./docs/Home_Assistant_setup/README.md)** ( details the complete Home Assistant implementation, including platform installation, sensor integration, dashboard configuration, and all additions and configurations carried out as part of the project. )
+    - **[Documentation](./docs/Home_Assistant_setup/README.md)** ( details the complete Home Assistant implementation, including sensor integration, dashboard configuration, and all additions and configurations carried out as part of the project. )
 
 - **Sensor modules** operate as independent data sources and transmit measurements wirelessly to a central system.
     - **[Temperature & humidity sensor documentation (Bat-Detectie group)](https://github.com/BjarniHeselmans/Bat-Detectie.git)** ( describes the design, configuration, and operation of the temperature and humidity sensor modules. )
