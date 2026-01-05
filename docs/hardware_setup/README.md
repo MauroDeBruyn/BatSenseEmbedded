@@ -12,15 +12,25 @@ This section describes the steps required to prepare the hardware and install Ho
 - [References](#references)
 
 ## Setting up the Router
-
-### Router Prerequisites
-- **TP-Link TL-MR6400 Wireless N 4G-LTE router**
+- **TP-Link TL-MR6400 Wireless N 4G-LTE Router**
   - Power supply: 9 V DC / 0.85 A  
   - Ethernet connection: Cat5/6
 
-```
-todo:
-```
+## Settings
+The router can be configured and managed through the online dashboard.  
+Connect to the router’s Wi-Fi network, either via cable or wirelessly, using the login credentials.  
+Then navigate to: http://tplinkmodem.net/
+
+## Mode
+The router can be set to two different modes, which can be found under the **“Operation Mode”** tab in the **Advanced** menu.
+
+- **3G/4G Router Mode**  
+  This mode is used when a LAN connection is not available. A SIM card is inserted into the router, allowing it to connect to the internet via the mobile network.
+
+- **Wireless Router Mode**  
+  This mode can be used without a SIM card. A standard wired internet connection provides internet access to the router.  
+  *(This method was used during the development of the system.)*
+
 
 ## Installing Home Assistant
 

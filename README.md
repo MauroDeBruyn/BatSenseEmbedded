@@ -126,6 +126,7 @@ This section documents **observable and verifiable system behavior only**.
 - Devices successfully connect to the Home Assistant instance once the system is connected to the **batsenseWiFi** network.
 - Network router operates reliably in both **4G** and **WLAN** modes, depending on configuration.
 - Home Assistant instances are **interchangeable** without requiring manual reconfiguration or setup changes.
+- Battery life tested. +7 Days of use on a single battery.
 
 ### Tested With Limited Functionality
 
