@@ -141,40 +141,15 @@ This section documents **observable and verifiable system behavior only**.
 
 - Concurrent SPI access on a shared bus using the **FYSETC SD WiFi Pro**.
 - Home Assistant was not tested with real camera data; no guarantee can be made that it will function correctly without additional configuration or validation.
+Wireless access to SD card–stored data was partially achieved, confirming that remote data retrieval is feasible in deployments where physical access is impractical.
 
-``` 
-== BESLUIT ==
-Hier kijken jullie kritisch terug op het project.
-Beantwoord hier eerlijk:
-• Wat is écht geslaagd?
-• Wat liep fout?
-• Wat was het moeilijkste technische probleem?
-• Wat zouden jullie anders doen met meer tijd?
-• Wat is de relevantie voor de praktijk?
-• Wat is de meerwaarde van dit project?
-Kritische reflectie
-Technisch eerlijk
-Professionele toon
-Geen excuses
-Geen “we hebben veel geleerd” zonder uitleg
+### conclusion
 
-```
+This project demonstrated that a sensor network with **20 operational modules** can be reliably integrated into **Home Assistant** for centralized data ingestion and visualization, using tools such as **Grafana** and **InfluxDB**. Home Assistant instances proved to be seamlessly interchangeable without requiring manual reconfiguration of the modules.
 
-## 🛠️ Installation <a name="installation"></a>
-See [docs/INSTALL.md](./docs/INSTALL.md) for detailed instructions to set up and deploy sensor modules.
+Several limitations were also identified. Sharing a single SPI bus between multiple masters requires a highly robust design to ensure reliable communication. This was the most significant technical challenge of the project and revealed the lack of strict SPI ownership and arbitration in the chosen architecture. Camera integration was only validated using dummy data, meaning real-world camera functionality remains unverified.
 
-1. Download latest release or clone repository.
-2. Flash ESP32 modules using provided firmware and YAML configuration.
-3. Power up central device (Home Assistant hub).
-4. Confirm data transmission between modules and central hub.
-
----
-
-## 📚 Documentation <a name="documentation"></a>
-- See [Application Note](./docs/application_note.md) for technical details.
-- System architecture, hardware specs, and YAML setup guides are available in the `/docs` directory.
-
----
+With additional time, the system would benefit from a redesigned SPI access model, a more strictly encapsulated SD access layer, full validation using real camera hardware and data streams, and the integration of additional modules into the system.
 
 ## 👥 Contributors <a name="contributors"></a>
 - **Mauro De Bruyn** – Student / Developer – [GitHub](https://github.com/MauroDeBruyn)

@@ -6,8 +6,27 @@ This section documents the Home Assistant setup. It covers accessing the Home As
 - [Access Freshly Installed Home Assistant](#access-freshly-installed-home-assistant)
 - [Installation Options](#installation-options)
   - [New Installation](#new-installation)
+  - [SD Card File Transfer Installation](#sd-card-file-transfer-installation)
   - [Backup Installation](#backup-installation)
-- [Post-Installation](#post-installation)
+- [Backing Up Home Assistant](#how-to-back-up-your-home-assistant-instance)
+- [Expert (Advanced) Settings](#expertise-settings)
+- [Sidebar Customization](#sidebar-items)
+- [Add-ons Management](#how-to-add-addons)
+  - [Adding Local Add-ons](#adding-local-addons)
+  - [Troubleshooting Local Add-ons](#troubleshooting-local-addons)
+- [InfluxDB Integration](#influxdb)
+  - [Installation and Setup](#installation--setup)
+  - [Storing Sensor Data](#how-to-instruct-home-assistant-to-save-sensor-data-to-influxdb)
+  - [Data Validation](#validating-with-sensor-data-input)
+- [Grafana Integration](#grafana)
+  - [Adding InfluxDB as Data Source](#adding-influxdb-plugin)
+  - [Dashboards and Visualizations](#creating-a-dashboard--graphs)
+  - [Embedding Grafana in Home Assistant](#adding-visualization-to-home-assistant-dashboard)
+- [Camera Integration](#integrating-camera-image-into-home-assistant-dashboard)
+  - [Prerequisites](#prerequisites)
+  - [AppDaemon Setup](#setting-up-appdaemon)
+- [Adding ESP Sensor Modules](#how-to-add-esp-sensor-modules-to-home-assistant)
+- [Local Image Integration](#home-assistant)
 - [References](#references)
 
 ## Access Freshly Installed Home Assistant
@@ -279,6 +298,16 @@ the end result should output the following in the logs:
 2025-12-13 09:15:05.892850 INFO MLX90640_CAM1: [08:15:05.887413] READY ��� Listening on 0.0.0.0:6000
 2025-12-13 09:15:05.893691 INFO MLX90640_CAM1: [08:15:05.887276] INIT OK ��� listening on 0.0.0.0:6000, endpoint '/MLX90640_CAM1'
 ```
+### How to Add ESP Sensor Modules to Home Assistant
+
+1. Install the **ESPHome** add-on in Home Assistant.
+2. Set up and flash the ESP device using the provided scripts:  
+   - [ESP device setup](https://github.com/BjarniHeselmans/Bat-Detectie/tree/main/Scripts)
+3. In Home Assistant, navigate to **Settings → Devices & Services**.
+4. Select **ESPHome** from the integrations list.
+5. If the device is discovered automatically, click **Configure** and add it.
+6. If automatic discovery fails, choose **Add device manually** and enter the ESP device’s IP address.
+7. Verify that the sensor entities appear and are reporting data correctly.
 
 ### Home assistant
 1. navigate to `settings -> `Devives & Services`
