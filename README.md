@@ -87,7 +87,8 @@ The collected data is intended to support further analysis by researchers and to
 
 - **Home Assistant OS** is used as the central platform for data ingestion, processing, storage, and visualization.
     - **[Documentation](./docs/Home_Assistant_setup/README.md)** ( details the complete Home Assistant implementation, including sensor integration, dashboard configuration, and all additions and configurations carried out as part of the project. )
-
+    - **which website to reach home assistant on: http://batsenseembedded:8123/
+    
 - **Sensor modules** operate as independent data sources and transmit measurements wirelessly to a central system.
     - **[Temperature & humidity sensor documentation (Bat-Detectie group)](https://github.com/BjarniHeselmans/Bat-Detectie.git)** ( describes the design, configuration, and operation of the temperature and humidity sensor modules. )
     - **[Thermal sensor documentation (Niels & Yinnis)]()** ( describes the design, configuration, and operation of the thermal sensor modules. )
