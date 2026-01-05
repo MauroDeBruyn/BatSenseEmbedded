@@ -80,6 +80,20 @@ The collected data is intended to support further analysis by researchers and to
 - **Preconfigured autonomous battery-powered sensor modules (40 units)**  
   - Providing temperature, humidity, and thermal data
 
+### SD Card Adapter Materials
+
+- **MicroSD to SD Card Adapter**  
+  - Enables SD card extension and easier physical integration  
+  - [Product link](https://www.amazon.com.be/-/en/CENPEK-Adapter-Extension-Upgrade-Navigators/dp/B0C7KV13RQ)
+
+- **FYSETC SD WiFi Pro**    
+  - Custom-designed board by FYSETC built around an ESP8266 microcontroller  
+  - Provides SD card functionality with Wi-Fi connectivity and SPI access from two endpoints  
+  - Used as an experimental platform for wireless SD card data accesse  
+  - [Project repository](https://github.com/FYSETC/SD-WIFI-PRO)  
+  - [Product page 1](https://nl.aliexpress.com/item/1005006122460409.html)  
+  - [Product page 2](https://nl.aliexpress.com/item/1005008461184152.html)
+
 ### Methods
 
 - **Hardware setup** explains how the physical components are interconnected and configured to operate as a single system.
