@@ -88,10 +88,14 @@ The collected data is intended to support further analysis by researchers and to
 - **Home Assistant OS** is used as the central platform for data ingestion, processing, storage, and visualization.
     - **[Documentation](./docs/Home_Assistant_setup/README.md)** ( details the complete Home Assistant implementation, including sensor integration, dashboard configuration, and all additions and configurations carried out as part of the project. )
     - **which website to reach home assistant on: http://batsenseembedded:8123/
-    
+
+- **SD Card Data Server** is used to enable remote access to data stored on an SD card without requiring physical removal of the card from the device.
+  - **[Documentation](./firmware/pippyg_pipistrelle_mini/README.md)** (describes the implementation that explores wireless SD card access, including SPI communication, an embedded HTTP server for file listing and download, observed limitations, and experimental results. This is not a full production-ready implementation, but a research-driven subsystem.)
+  - **Purpose:** Allow users to remotely retrieve sensor data from deployed devices where physical access to the SD card is impractical.
+
 - **Sensor modules** operate as independent data sources and transmit measurements wirelessly to a central system.
     - **[Temperature & humidity sensor documentation (Bat-Detectie group)](https://github.com/BjarniHeselmans/Bat-Detectie.git)** ( describes the design, configuration, and operation of the temperature and humidity sensor modules. )
-    - **[Thermal sensor documentation (Niels & Yinnis)]()** ( describes the design, configuration, and operation of the thermal sensor modules. )
+    - **[Thermal sensor documentation (Niels & Yinnis)]** ( describes the design, configuration, and operation of the thermal sensor modules. )
 
 ---
 
