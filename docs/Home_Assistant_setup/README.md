@@ -85,6 +85,7 @@ Use this option to restore Home Assistant from an existing backup.
    http://homeassistant.local:8123
    ```
 4. Select **Restore from Backup** when prompted and upload the backup file.
+The backup file can be found ![here](/firmware/automatic_backup_2025_12_3.tar)
 
 ---
 
@@ -124,7 +125,7 @@ To install add-ons navigate to the settings menu in the left lower corner and cl
 After which you can either configure your existing addons or add new ones via the add-on store by selecting an addon from the list and clicking install.
 
 ## Adding local addons
-Local addons are a more advanced way of getting functionality onto your home assistant. 
+Local addons are a more advanced way of getting functionality onto your home assistant.
 To add local addons you will need the following addon for this process to be simple.:
 - Studio code server(this addon allows us to view the files on the system running home assistant. it has all the functionality that normal visual studio code has.)
 
@@ -182,7 +183,7 @@ Adding a database to your home assistant and saving data from your sensors is pr
 1. Open the file editor from the Home assistant left ribbon.
 2. Open the folder icon
 3. Open the file called configuration.yaml\
-**NOTE**: Changes made to this folder have effect on restart and can break your system if configured incorrectly. 
+**NOTE**: Changes made to this folder have effect on restart and can break your system if configured incorrectly.
 4. Add the following code snippet to the end of the file.
 ```
 influxdb:  
@@ -214,7 +215,7 @@ To validate everything is working correctly we can open the database and check f
 4. select what to view.
 ![InfluxDB Data Validation](/resources/documentation_media/Home_Assistant_Setup/InfluxDB_validation.png)
 
-## grafana 
+## grafana
 To display graphs to the user, Grafana was used due to its extensive visualization capabilities.
 
 ### Adding InfluxDB plugin
@@ -249,7 +250,7 @@ Following steps showcase a way of adding grafana visualization to the home assis
 2. click on 3 dots -> Share -> Share embed
 ![URL opentab](/resources/documentation_media/Home_Assistant_Setup/grafana_where_URL.png)
 3. turn of Lock time range
-4. copy the url from the start to the end of the following character: `"` 
+4. copy the url from the start to the end of the following character: `"`
 ![URL opentab](/resources/documentation_media/Home_Assistant_Setup/grafana_url_cpy.png)
 5. Navigate to the Home assistant dashboard.
 6. open: `Edit dashboard` -> Add card
@@ -276,7 +277,7 @@ This section describes how to add a camera image to the dashboard so the user ca
   5050/tcp: AppDaemon
   6000/tcp: Camera 1 input
   6001/udp: Camera 2 input
-  ``` 
+  ```
 - python script which will listen for image data can be found [here](/firmware/Thermal_Imaging/thermal_receiver.py).
 - python script for dummy camera can be found [here](/firmware/Simulations/mlx90640_sim.py).
 - Full appdaemon Yaml config can be found [here](/firmware/Thermal_Imaging/config.yaml).
@@ -316,7 +317,7 @@ the end result should output the following in the logs:
 4. navigate to the dashboard and open the dashboard editor
 5. add new card, searh for `picture entity` and select it.
 6. Under Entity and Camera Entity search for the name you gave to the `Local File` which holds the image data, for example `thermal1`
-7. Add it to your dashboard. 
+7. Add it to your dashboard.
 
 ![example image](/resources/documentation_media/Home_Assistant_Setup/camera_image_example.png)
 ## References
