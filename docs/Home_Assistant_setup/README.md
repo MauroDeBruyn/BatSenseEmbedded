@@ -24,25 +24,62 @@ The time required for the interface to become available depends on the hardware.
 
 ### New Installation
 
-This option is used when setting up Home Assistant for the first time on the device.
+Use this option when setting up Home Assistant on a device for the first time.  
+After preparing the hardware and storage media, complete the onboarding process at:
 
 ```
-todo:
+http://homeassistant.local:8123
 ```
+
+### SD Card File Transfer Installation
+
+Use this method to clone an existing Home Assistant SD card to another SD card.
+
+**Steps:**
+1. Install and open [balenaEtcher](https://etcher.balena.io/).
+2. Select **Clone drive**.
+3. Insert both SD cards into the computer.
+4. Carefully identify the **source** (existing Home Assistant SD card) and the **destination** (target SD card).
+5. Select the drives accordingly and start the cloning process.
+
+> The cloning process may take up to an hour depending on SD card size and system performance.
+
+---
 
 ### Backup Installation
 
-This option is used to restore a previously created Home Assistant backup.
+Use this option to restore Home Assistant from an existing backup.
 
-```
-todo:
-```
+#### Create a Backup
+1. Navigate to:
+   ```
+   Settings → System → Backups
+   ```
+2. Click **Create Backup** and generate an automatic backup.
+3. Download the backup file once completed.
 
-## How to backup your Home assistant instance.
-1. from the Home Assistant Overview, navigate to the settings panel.
-2. Click on: `System` -> `Backups`. 
+#### Restore the Backup
+1. Prepare the destination device by completing the hardware setup.
+2. Boot the new Home Assistant system.
+3. Open:
+   ```
+   http://homeassistant.local:8123
+   ```
+4. Select **Restore from Backup** when prompted and upload the backup file.
 
-Here you can view, backup and download previous backups.
+---
+
+## How to Back Up Your Home Assistant Instance
+
+1. Open the Home Assistant web interface.
+2. Navigate to:
+   ```
+   Settings → System → Backups
+   ```
+3. Click **Create Backup**.
+4. Download the backup file and store it securely.
+
+Here you can view, backups and download previous backups.
 ![how to backup](/resources/documentation_media/Home_Assistant_Setup/How_to_backup.png)
 
 ## Expertise settings
