@@ -20,7 +20,6 @@ This section describes the steps required to prepare the hardware and install Ho
 
 ```
 todo:
-mauro schrijf hier ovr de router setup etc...
 ```
 
 ## Installing Home Assistant
