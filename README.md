@@ -114,47 +114,33 @@ The collected data is intended to support further analysis by researchers and to
 ---
 
 
-## 🗺️ Roadmap <a name="roadmap"></a>
+## 🗺️ Results <a name="roadmap"></a>
 
-``` 
-== Resultaten ==
-Hier laat je bewijs zien van wat jullie systeem echt doet.
-Geen verhalen, geen beloftes, alleen aantoonbare realiteit.
-Hier hoort o.a. in:
-• Aantal werkende modules
-• Screenshots van Home Assistant
-• Temperatuurgrafieken
-• Humiditygrafieken
-• Camerabeelden met timestamp
-• Testresultaten
-• Stabiliteitstests
-Beantwoord hier:
-• Wat is effectief getest?
-• Wat werkte stabiel?
-• Wat werkte soms?
-• Wat werkte niet?
-Alles onderbouwen met beeld, grafiek of meetdata
-• Geen toekomstplannen
-• Geen meningen
+This section documents **observable and verifiable system behavior only**.
 
-```
+### Proven Functionality
 
-- ✅ **Completed**
-   - ESP modules tested for reliability and data accuracy
-   - Cable lengths reduced to comply with I²C protocol specs
-   - Sensors inspected, rewired, and verified for field deployment
+- **20 fully operational sensor modules** connected and actively reporting data.
+- **Home Assistant preview available** via recorded output  
+  - [Video](./resources/media/exportData.mp4)
+- Devices successfully connect to the Home Assistant instance once the system is connected to the **batsenseWiFi** network.
+- Network router operates reliably in both **4G** and **WLAN** modes, depending on configuration.
+- Home Assistant instances are **interchangeable** without requiring manual reconfiguration or setup changes.
 
-- 🔄 **Ongoing**
-   - Wi-Fi data transfer pipeline (for pippyg modules)
-   - SD-based data logging
-   - Integration with Home Assistant for real-time data display
+### Tested With Limited Functionality
 
-- 🚀 **Future**
-   - Full connectivity of all modules to Home Assistant
-   - Easy data export from Home Assistant or SD storage
-   - Automated reporting and visualization tools for ecological research
+- Camera data preview via Home Assistant dashboard (dummy data only).
+- **SD-based and Wi-Fi FTP server data access**
+  - **Single SPI master:** Stable data transfer, correct UI loading, reliable file serving.
+  - **Shared SPI bus:** Deadlock occurs, system becomes unrecoverable.
+- **Camera images available (dummy data)**  
+  - Dummy camera data is displayed in the dashboard for validation purposes  
+  - [Example image](./resources/documentation_media/Home_Assistant_Setup/camera_image_example.png)
 
----
+### Not Fully Functional
+
+- Concurrent SPI access on a shared bus using the **FYSETC SD WiFi Pro**.
+- Home Assistant was not tested with real camera data; no guarantee can be made that it will function correctly without additional configuration or validation.
 
 ``` 
 == BESLUIT ==
