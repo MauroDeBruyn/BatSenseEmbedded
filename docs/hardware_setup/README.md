@@ -2,6 +2,8 @@
 
 This section describes the steps required to prepare the hardware and install Home Assistant OS on a Raspberry Pi. It assumes the hardware components are already available and focuses on bringing the central system into an operational state.
 
+![Setup](/resources/media/Router.png)
+
 ## Overview
 - [Setting up the Router](#setting-up-the-router)
   - [Router Prerequisites](#router-prerequisites)
